@@ -1,15 +1,15 @@
 package utilz;
 
 public class Constants {
-	
-	public static class Directions{
+	// Criamos duas classes dentro da classe Constants
+	public static class Directions { 
 		public static final int LEFT = 0;
 		public static final int UP = 1;
 		public static final int RIGHT = 2;
 		public static final int DOWN = 3;
 	}
 	
-	public static class PlayerConstants{
+	public static class PlayerConstants {
 		public static final int IDLE = 0;
 		public static final int RUNNING = 1;
 		public static final int JUMP = 2;
@@ -21,6 +21,7 @@ public class Constants {
 		public static final int ATTACK_JUMP_2 = 8;
 		
 		public static int GetSpritesAmount(int player_action) {
+// Método para saber quantas animações cada coluna tem, para ficar sempre contínuo
 			switch (player_action) {
 			case RUNNING:
 				return 6;

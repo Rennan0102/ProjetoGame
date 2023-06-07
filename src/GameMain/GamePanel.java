@@ -85,6 +85,7 @@ public class GamePanel extends JPanel{
 	}
 	
 	private void updatePos() {
+// Aqui é onde o personagem anda, efetivamente, quando aperto o primeiro botão, o moving passa a ser true e o playerDir é mudado
 		if (moving) {
 			switch (playerDir) {
 			case LEFT:
@@ -105,12 +106,12 @@ public class GamePanel extends JPanel{
 
 	
 	private void updateAnimationTick() {
-		aniTick++;
+		aniTick++; // Para manter o looping de animação
 		if(aniTick >= aniSpeed) {
-			aniTick = 0;
+			aniTick = 0;  // Toda vez que chegar no valor de aniSpeed, reseta
 			aniIndex++;
 			if(aniIndex >= GetSpritesAmount(playerAction)) {
-				aniIndex = 0;
+				aniIndex = 0;  // Sempre que chegar na última animação da linha, reseta
 			}
 		}
 	}
@@ -124,5 +125,4 @@ public class GamePanel extends JPanel{
 		
 		g.drawImage(animations[playerAction][aniIndex], (int) xDelta, (int) yDelta, 256, 160, null);
 	}
-
 }
