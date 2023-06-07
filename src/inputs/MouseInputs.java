@@ -16,7 +16,7 @@ public class MouseInputs implements MouseListener, MouseMotionListener{
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("Rato clicou!");
+		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -46,6 +46,6 @@ public class MouseInputs implements MouseListener, MouseMotionListener{
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		gamePanel.setRectPos(e.getX(), e.getY());
+		// TODO Auto-generated method stub
 	}
 }
