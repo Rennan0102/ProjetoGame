@@ -1,8 +1,8 @@
 package GameMain;
 
-public class GameTest {
+public class MainClass {
 
 	public static void main(String[] args) {
-		new Game();
-	}
+		new Game();}
+
 }
