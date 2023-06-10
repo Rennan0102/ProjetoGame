@@ -13,116 +13,39 @@ import inputs.MouseInputs;
 
 import static utilz.Constants.PlayerConstants.*;
 import static utilz.Constants.Directions.*;
+import static GameMain.Game.GAME_HEIGHT;
+import static GameMain.Game.GAME_WIDTH;
 
-public class GamePanel extends JPanel{
-	
-	private MouseInputs mouseInputs;  // Um novo MouseInputs criado, pq precisamos de outro para usar no addMouseMotionListener
-	private int xDelta = 100, yDelta = 100;  // Assim já começam na posição desejada
-	private BufferedImage img;  // Usado para importar uma imagem
-	private BufferedImage[][] animations;
-	private int aniTick, aniIndex, aniSpeed = 15;
-	private int playerAction = IDLE;
-	private int playerDir = -1;
-	private boolean moving = false;
-	
-	public GamePanel() {
+public class GamePanel extends JPanel {
+
+	private MouseInputs mouseInputs;
+	private Game game;
+
+	public GamePanel(Game game) {
 		mouseInputs = new MouseInputs(this);
-		
-		importImg();
-		loadAnimations();
-		
-		addKeyListener(new KeyboardInputs(this));  // Melhor implementar a interface para não colocar tudo no construtor
+		this.game = game;
 		setPanelSize();
+		addKeyListener(new KeyboardInputs(this));
 		addMouseListener(mouseInputs);
 		addMouseMotionListener(mouseInputs);
 	}
-	
-	private void loadAnimations() {
-		animations = new BufferedImage[9][6];
-		for (int j = 0; j < animations.length; j++) {
-			for (int i = 0; i < animations[j].length; i++) {
-				animations[j][i] = img.getSubimage(i * 64, j * 40, 64, 40);
-			}
-		}
-	}
-
-	private void importImg() {
-		// Recebendo uma imagem como um InputStream
-			InputStream is = getClass().getResourceAsStream("/player_sprites.png");
-			try {
-				img = ImageIO.read(is);
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					is.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-	}
 
 	private void setPanelSize() {
-		Dimension size = new Dimension(800, 500);  // Dimensão de tamanho 800 x 500
-		setPreferredSize(size);  // Recebe somente objetos do tipo Dimension
-
-	}
-	
-	public void setDirection(int direction) {
-		this.playerDir = direction;
-		moving = true;
-	}
-	
-	public void setMoving(boolean moving) {
-		this.moving = moving;
-	}
-	
-	private void setAnimation() {
-		if (moving)
-			playerAction = RUNNING;
-		else
-			playerAction = IDLE;
-	}
-	
-	private void updatePos() {
-// Aqui é onde o personagem anda, efetivamente, quando aperto o primeiro botão, o moving passa a ser true e o playerDir é mudado
-		if (moving) {
-			switch (playerDir) {
-			case LEFT:
-				xDelta -= 5;
-				break;
-			case UP:
-				yDelta -= 5;
-				break;
-			case RIGHT:
-				xDelta += 5;
-				break;
-			case DOWN:
-				yDelta += 5;
-				break;
-			}
-		}
+		Dimension size = new Dimension(GAME_WIDTH, GAME_HEIGHT);
+		setPreferredSize(size);
 	}
 
-	
-	private void updateAnimationTick() {
-		aniTick++; // Para manter o looping de animação
-		if(aniTick >= aniSpeed) {
-			aniTick = 0;  // Toda vez que chegar no valor de aniSpeed, reseta
-			aniIndex++;
-			if(aniIndex >= GetSpritesAmount(playerAction)) {
-				aniIndex = 0;  // Sempre que chegar na última animação da linha, reseta
-			}
-		}
+	public void updateGame() {
+
 	}
-	
+
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
-		updateAnimationTick();
-		setAnimation();
-		updatePos();
-		
-		g.drawImage(animations[playerAction][aniIndex], (int) xDelta, (int) yDelta, 256, 160, null);
+		game.render(g);
 	}
+
+	public Game getGame() {
+		return game;
+	}
+
 }
